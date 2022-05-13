@@ -10,13 +10,14 @@
     <script type="text/javascript" src="../osql.js"></script>
 
     <script>
+        
         function button1Pressed() {
             doSelect();
         }
 
         async function doSelect() {
             var search=document.getElementById('text').value;
-            var sql = `select * from Tweets where tweet like '%${search}%' limit 20;`;
+            var sql = `select * from Tweets where tweet like '%${search}%' order by time desc limit 20;`;
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = '';

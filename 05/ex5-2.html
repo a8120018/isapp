@@ -10,6 +10,25 @@
     <script type="text/javascript" src="../osql.js"></script>
 
     <script>
+        jQuery(document).ready(function(){
+            start();
+        });
+
+        async function start(){
+            var sql = `select * from Tweets order by time desc limit 20;`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+            var html = '';
+            html = html + '<ul>';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                html = html + '<li>' + object.tweet + ',' + object.id + ', ' + object.name + ',' + object.time + '</li>';
+            }
+            html = html + '</ul>';
+            document.getElementById('ready').innerHTML=html;
+        }
+        
+
         function button1Pressed() {
             doInsert();
         }
@@ -31,7 +50,7 @@
 
             async function doSelect() {
                 var search = document.getElementById('text').value;
-                var sql = `select * from Tweets where tweet like '%${search}%' limit 20;`;
+                var sql = `select * from Tweets where tweet like '%${search}%' order by time limit 20;`;
                 var objects = await osql.connect(sql);
                 console.log(objects);
                 var html = '';
@@ -58,9 +77,9 @@
     閲覧:<input id="text" type="textfield">
     <button onclick="button2Pressed()">search</button>
     <hr>
-    
+    <p id="ready"></p>
     <p id="result"></p>
-    <p id="result2">xxxx</p>
+    <p id="result2"></p>
 </body>
 
 </html>

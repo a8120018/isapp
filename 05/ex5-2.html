@@ -11,8 +11,18 @@
 
     <script>
         jQuery(document).ready(function(){
-            start();
+            x=0;
+            setInterval(second,1000);
         });
+        async function second(){
+            if(x%2===0){
+                start();
+                x++;
+            }
+            else{
+                x++;
+            }
+        };
 
         async function start(){
             var sql = `select * from Tweets order by time desc limit 20;`;
@@ -26,12 +36,12 @@
             }
             html = html + '</ul>';
             document.getElementById('ready').innerHTML=html;
-        }
+        };
         
 
         function button1Pressed() {
             doInsert();
-        }
+        };
 
         async function doInsert() {
             var userid = document.getElementById('tf1').value;
@@ -43,10 +53,10 @@
 
             document.getElementById('result').innerHTML = "tweetしました";
             tf2.value='';
-        }
+        };
         function button2Pressed() {
                 doSelect();
-            }
+            };
 
             async function doSelect() {
                 var search = document.getElementById('text').value;
@@ -61,7 +71,7 @@
                 }
                 html = html + '</ul>';
                 document.getElementById('result2').innerHTML = html;
-            }
+            };
     </script>
 
 </head>

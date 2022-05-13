@@ -23,9 +23,26 @@
             console.log(objects);
 
             document.getElementById('result').innerHTML = "tweetしました";
-            tf1.value='';
             tf2.value='';
         }
+        function button2Pressed() {
+                doSelect();
+            }
+
+            async function doSelect() {
+                var search = document.getElementById('text').value;
+                var sql = `select * from Tweets where tweet like '%${search}%' limit 20;`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+                var html = '';
+                html = html + '<ul>';
+                for (var i = 0; i < objects.length; i++) {
+                    var object = objects[i];
+                    html = html + '<li>' + object.tweet + ',' + object.id + ', ' + object.name + ',' + object.time + '</li>';
+                }
+                html = html + '</ul>';
+                document.getElementById('result2').innerHTML = html;
+            }
     </script>
 
 </head>
@@ -38,7 +55,12 @@
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
     <br>
+    閲覧:<input id="text" type="textfield">
+    <button onclick="button2Pressed()">search</button>
+    <hr>
+    
     <p id="result"></p>
+    <p id="result2">xxxx</p>
 </body>
 
 </html>

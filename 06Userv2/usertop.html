@@ -17,12 +17,24 @@
     <h1>ユーザトップ</h1>
     <p id="welcome" value=""></p>
     <hr>
+    <button onclick="buttonPressed()">ユーザ情報変更</button>
 
 </body>
 
 <script>
-    var name = sessionStorage.getItem('username');
-    document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん'
+    
+    $().ready(function(){
+        init();
+    });
+    function init(){
+        var name=sessionStorage.getItem('username');
+        var id=sessionStorage.getItem('userid');
+        document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
+    };
+
+    function buttonPressed(){
+        location.href=`update.html?name=${name}`;
+    };
 </script>
 
 </html>

@@ -17,11 +17,17 @@
     <h1>ユーザトップ</h1>
     <p id="welcome" value=""></p>
     <br>
-    名前:<input id="tf1" value="name" type="textfield">
+    名前:<input id="tf1" value="" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
     <button onclick="button1Pressed()">tweet</button>
     <br>
+    閲覧:<input id="text" type="textfield">
+    <button onclick="button2Pressed()">search</button>
+    <hr>
+    <p id="ready"></p>
+    <p id="result"></p>
+    <p id="result2"></p>
     <hr>
     <button onclick="buttonPressed()">ユーザ情報変更</button>
 
@@ -36,6 +42,7 @@
         var name=sessionStorage.getItem('username');
         var id=sessionStorage.getItem('userid');
         document.getElementById('welcome').innerHTML = 'ようこそ' + name + 'さん';
+        document.getElementById('tf1').value=name;
     };
 
     function button1Pressed() {
@@ -53,6 +60,25 @@
             document.getElementById('result').innerHTML = "tweetしました";
             tf2.value = '';
         };
+
+        function button2Pressed() {
+                doSelect();
+            };
+
+            async function doSelect() {
+                var search = document.getElementById('text').value;
+                var sql = `select * from Tweets where tweet like '%${search}%' order by time limit 20;`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+                var html = '';
+                html = html + '<ul>';
+                for (var i = 0; i < objects.length; i++) {
+                    var object = objects[i];
+                    html = html + '<li>' + object.tweet + ',' + object.id + ', ' + object.name + ',' + object.time + '</li>';
+                }
+                html = html + '</ul>';
+                document.getElementById('result2').innerHTML = html;
+            };
 
     function buttonPressed(){
         location.href=`update.html?name=${name}`;

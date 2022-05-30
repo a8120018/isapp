@@ -16,18 +16,8 @@
 <body>
     <h1>ユーザトップ</h1>
     <p id="welcome" value=""></p>
-    <br>
-    名前:<input id="tf1" value="" type="textfield">
-    <br>
-    tweet:<input id="tf2" type="textfield">
-    <button onclick="button1Pressed()">tweet</button>
-    <br>
-    閲覧:<input id="text" type="textfield">
-    <button onclick="button2Pressed()">search</button>
     <hr>
     <p id="ready"></p>
-    <p id="result"></p>
-    <p id="result2"></p>
     <hr>
     <button onclick="buttonPressed()">ユーザ情報変更</button>
 
@@ -67,7 +57,7 @@
 
             async function doSelect() {
                 var search = document.getElementById('text').value;
-                var sql = `select * from Tweets where tweet like '%${search}%' order by time limit 20;`;
+                var sql = `select * from Tweets where tweet like '%${search}%' order by time asc limit 20;`;
                 var objects = await osql.connect(sql);
                 console.log(objects);
                 var html = '';
